@@ -37,7 +37,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
                //Validar se usuario existe
               var user = this.iUserRepository.findByUsername(username);
               if(user == null){
-                response.sendError(401, "Usuario não existe");
+                response.sendError(401);
               } else {
                 //Validar senha
                var passwordVerify = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
@@ -45,7 +45,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
                   request.setAttribute("idUser", user.getId());
                 filterChain.doFilter(request, response);
                 }else {
-                response.sendError(401, "Senha incorreta.");
+                response.sendError(401);
                 }
               }
             } else {
